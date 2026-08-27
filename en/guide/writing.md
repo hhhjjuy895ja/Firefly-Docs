@@ -54,6 +54,26 @@ draft: false
 | `sourceLink` | `string` | No | Source/reference link |
 | `password` | `string` | No | Post password. When set, the post will be encrypted. See [Post Encryption](./password) |
 | `passwordHint` | `string` | No | Password hint displayed above the input field |
+| `series` | `string` | No | Series name. When set, a collapsible series navigation box appears above the article body. See [Article Series](#article-series) |
+| `seriesOrder` | `number` | No | Sort order within the series (ascending); posts without it sort after posts that have it |
+
+### Article Series
+
+Group multiple posts into a series so readers can follow them in order. Just set `series` (the series name) and `seriesOrder` (the position within the series) in the Front-matter:
+
+```yaml
+---
+title: Chapter 2
+published: 2025-06-01
+series: "Getting Started with Astro"
+seriesOrder: 2
+---
+```
+
+- **No configuration required** — setting `series` automatically shows a collapsible series navigation box above the article body (the current post is highlighted as "This article", and other posts link directly).
+- Visit `/series/` to see all series on your site; this page is already added under the "Articles" category in the navigation bar.
+- All posts in a series must use an **identical** series name (same casing, no stray spaces).
+- `seriesOrder` is a numeric position (ascending); `0` is a valid order value. Posts without `seriesOrder` sort after posts that have it. When equal (or all unordered), posts sort by publish date (descending), then by title.
 
 ### Cover Image Path
 
