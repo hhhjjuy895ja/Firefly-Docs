@@ -74,7 +74,7 @@ card: {
 | `navbar.widthFull` | `boolean` | `false` | Whether navbar takes full width |
 | `navbar.menuAlign` | `string` | `"center"` | Desktop menu alignment: `"left"` or `"center"` |
 | `navbar.followTheme` | `boolean` | `false` | Whether navbar icon and title follow theme color |
-| `navbar.stickyNavbar` | `boolean` | `true` | Keep navbar fixed at the top and always visible |
+| `navbar.navbarMode` | `"static" \| "fixed" \| "dynamic"` | `"fixed"` | Navbar mode: `static` scrolls away; `fixed` stays pinned at the top; `dynamic` is pinned but hides on scroll down and reveals on a slight scroll up |
 
 Logo supports four types:
 
@@ -105,7 +105,7 @@ navbar: {
   widthFull: false,
   menuAlign: "center",
   followTheme: false,
-  stickyNavbar: true,
+  navbarMode: "fixed",
 },
 ```
 

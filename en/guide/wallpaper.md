@@ -208,15 +208,13 @@ The wallpaper carousel user toggle has been moved to `displaySettingsConfig.bann
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `banner.navbar.transparentMode` | `string` | `"semi"` | Mode: `"semi"` semi-transparent, `"full"` fully transparent, `"semifull"` dynamic |
-| `banner.navbar.blur` | `number` | `5` | Blur intensity; `0` disables the navbar's frosted glass |
+| `banner.navbar.transparentMode` | `string` | `"semi"` | Mode: `"semi"` semi-transparent, `"semifull"` dynamic (transparent at the top of the home page, frosted on scroll; semi-transparent on other pages), `"none"` solid opaque |
+| `banner.navbar.blur` | `number` | `6` | Blur intensity; `0` disables the navbar's frosted glass |
 
 ::: info
 The navbar's dropdown menus and float panels (search, display settings, light/dark, music, mobile menu) always keep a frosted glass. Its blur follows `banner.navbar.blur` with a minimum of `2px`.
 
 So setting `blur` to `0` only disables the frosted glass on the navbar itself — the panels are unaffected. In pure-color mode (`mode: "none"`) the panels stay opaque.
-
-The fullscreen wallpaper mode's navbar is not affected by this config (it is controlled separately by `fullscreen.navbar.dynamicTransparent`, see below).
 :::
 
 ### Wave Animation
@@ -258,14 +256,16 @@ Fullscreen wallpaper mode **fixes** the background image across the entire scree
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
 | `fullscreen.position` | `string` | `"center"` | CSS `object-position` value |
-| `fullscreen.navbar.dynamicTransparent` | `boolean` | `true` | Enable dynamic transparent navbar: the navbar is transparent at the **top of the home page** and becomes opaque after scrolling (home page only) |
+| `fullscreen.navbar.transparentMode` | `string` | `"semifull"` | Navbar mode: `"semi"` semi-transparent, `"semifull"` dynamic (transparent at the **top of the home page**, frosted on scroll; semi-transparent on other pages) |
+| `fullscreen.navbar.blur` | `number` | `6` | Navbar frosted blur; `0` disables it (applies in the frosted state) |
 | `fullscreen.blurRamp.enable` | `boolean \| object` | `{ desktop: true, mobile: true }` | Blur ramp toggle for the home page scroll (blur ramps from 0 to `overlay.blur` as you scroll). Supports a boolean or per-device `{ desktop, mobile }`; when disabled on a device, fullscreen wallpaper stays crisp there (home and other pages) and the settings-panel blur slider is hidden |
 
 ```ts
 fullscreen: {
   position: "center",
   navbar: {
-    dynamicTransparent: true,
+    transparentMode: "semifull",
+    blur: 6,
   },
   blurRamp: {
     enable: {
@@ -277,7 +277,7 @@ fullscreen: {
 ```
 
 ::: info
-In fullscreen mode the navbar is fully transparent by default (transparency is controlled by `overlay.cardOpacity`). With `fullscreen.navbar.dynamicTransparent` enabled, the home page's top navbar becomes transparent and shows a card background after scrolling.
+The fullscreen navbar's transparency is controlled by `fullscreen.navbar.transparentMode`: `"semifull"` keeps the home page's top navbar transparent and shows a frosted card after scrolling (semi-transparent on other pages); `"semi"` is always semi-transparent. The navbar background opacity is controlled by `overlay.cardOpacity`.
 :::
 
 ::: tip

@@ -210,15 +210,13 @@ common: {
 
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `banner.navbar.transparentMode` | `string` | `"semi"` | 透明模式：`"semi"` 半透明、`"full"` 完全透明、`"semifull"` 动态透明 |
-| `banner.navbar.blur` | `number` | `5` | 毛玻璃模糊度，`0` 即关闭导航栏毛玻璃 |
+| `banner.navbar.transparentMode` | `string` | `"semi"` | 透明模式：`"semi"` 半透明、`"semifull"` 动态透明（仅首页顶部透明、下滑磨砂；非首页与 fullscreen 一致为半透明）、`"none"` 纯色不透明 |
+| `banner.navbar.blur` | `number` | `6` | 毛玻璃模糊度，`0` 即关闭导航栏毛玻璃 |
 
 ::: info
 导航栏的子菜单与浮动面板（搜索、显示设置、亮暗色、音乐、移动端菜单）始终保留毛玻璃，模糊度跟随 `banner.navbar.blur`，但有 `2px` 的最小值。
 
 所以把 `blur` 设为 `0` 只会关闭导航栏自身的毛玻璃，面板不受影响；纯色背景模式（`mode: "none"`）下面板保持不透明。
-
-全屏壁纸模式的导航栏不受此配置影响（由 `fullscreen.navbar.dynamicTransparent` 单独控制，见下文）。
 :::
 
 ### 水波纹动画
@@ -260,14 +258,16 @@ common: {
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `fullscreen.position` | `string` | `"center"` | CSS `object-position` 值 |
-| `fullscreen.navbar.dynamicTransparent` | `boolean` | `true` | 是否开启动态透明导航栏：开启后**首页顶部**导航栏透明，下滑后变不透明（仅首页生效） |
+| `fullscreen.navbar.transparentMode` | `string` | `"semifull"` | 导航栏透明模式：`"semi"` 半透明、`"semifull"` 动态透明（仅**首页**顶部透明、下滑磨砂；非首页为半透明） |
+| `fullscreen.navbar.blur` | `number` | `6` | 导航栏毛玻璃模糊度，`0` 即关闭（玻璃态生效） |
 | `fullscreen.blurRamp.enable` | `boolean \| object` | `{ desktop: true, mobile: true }` | 首页下滑时壁纸模糊渐变开关（从 0 渐变为 `overlay.blur` 的最大模糊）。支持布尔值或分别设置桌面端 / 移动端；关闭后该设备上全屏壁纸保持清晰（首页与非首页都不模糊），设置面板的模糊度滑块也会隐藏 |
 
 ```ts
 fullscreen: {
   position: "center",
   navbar: {
-    dynamicTransparent: true,
+    transparentMode: "semifull",
+    blur: 6,
   },
   blurRamp: {
     enable: {
@@ -279,7 +279,7 @@ fullscreen: {
 ```
 
 ::: info
-全屏壁纸模式下导航栏默认完全透明（透明度由 `overlay.cardOpacity` 控制）。开启 `fullscreen.navbar.dynamicTransparent` 后，首页顶部导航栏变为透明、下滑后显示卡片底色。
+全屏壁纸模式的导航栏透明模式由 `fullscreen.navbar.transparentMode` 控制：`"semifull"` 只在**首页顶部**透明、下滑后变磨砂卡片（非首页为半透明）；`"semi"` 则始终半透明。导航栏底色透明度由 `overlay.cardOpacity` 控制。
 :::
 
 ::: tip

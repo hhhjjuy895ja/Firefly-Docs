@@ -81,7 +81,7 @@ card: {
 | `navbar.widthFull` | `boolean` | `false` | 导航栏是否占满屏幕宽度 |
 | `navbar.menuAlign` | `string` | `"center"` | 桌面端导航菜单对齐方式：`"left"` 或 `"center"` |
 | `navbar.followTheme` | `boolean` | `false` | 导航栏图标和标题是否跟随主题色 |
-| `navbar.stickyNavbar` | `boolean` | `true` | 导航栏是否固定在顶部并始终可见 |
+| `navbar.navbarMode` | `"static" \| "fixed" \| "dynamic"` | `"fixed"` | 导航栏模式：`static` 不固定随页滚动；`fixed` 固定在顶部常显；`dynamic` 固定在顶部，下滑隐藏、轻微上滑显示 |
 
 Logo 支持四种类型：
 
@@ -112,7 +112,7 @@ navbar: {
   widthFull: false,
   menuAlign: "center",
   followTheme: false,
-  stickyNavbar: true,
+  navbarMode: "fixed",
 },
 ```
 

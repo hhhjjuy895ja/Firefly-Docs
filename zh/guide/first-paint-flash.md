@@ -145,7 +145,7 @@ navbar 等组件的 SSR 属性（如 `data-transparent-mode`）按 config 设置
 
 ```html
 <div id="navbar" ...>
-  <script is:inline define:vars={{ bannerTMode: ..., bannerBlur: ..., fsDynamic: ... }}>
+  <script is:inline define:vars={{ bannerTMode: ..., bannerBlur: ..., fsTMode: ..., fsBlur: ... }}>
     (function () {
       const wm = document.documentElement.getAttribute("data-wallpaper-mode");
       const navbar = document.getElementById("navbar");
@@ -174,7 +174,7 @@ navbar 等组件的 SSR 属性（如 `data-transparent-mode`）按 config 设置
 3. **水波纹/渐变**：banner 显示，fullscreen/overlay/none 隐藏
 4. **横幅标题**：banner 和 fullscreen 首页显示；overlay/none/fullscreen 非首页隐藏
 5. **内容区**：位置正确（banner 下方 / fullscreen 首页首屏之下 / fullscreen 非首页 5.5rem / overlay/none 5.5rem）
-6. **导航栏**：透明模式正确（banner semi / fullscreen none 或 semifull / overlay none / none none）
+6. **导航栏**：透明模式正确（banner semi|semifull|none（semifull 非首页为 semi）/ fullscreen semifull 或 semi / overlay none / none none）
 7. **body 类**：`enable-banner`/`no-banner-layout`/`wallpaper-transparent` 正确
 
 ## 排查清单
