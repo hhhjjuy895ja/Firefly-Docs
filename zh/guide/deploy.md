@@ -79,65 +79,19 @@ pnpm build
 
 1. 在 GitHub 仓库设置中：**Settings → Pages → Source**，选择 **GitHub Actions**
 
-2. 在项目根目录创建 `.github/workflows/deploy.yml`：
+2. 在 `/src/config/siteConfig.ts` 中设置 `site`：
 
-```yaml
-name: Deploy to GitHub Pages
-
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build
-        run: pnpm build
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+```js
+export const siteConfig: SiteConfig = {
+  site_url: "https://<username>.github.io",
+}
 ```
 
 3. 在 `astro.config.mjs` 中设置 `site` 和 `base`：
 
 ```js
 export default defineConfig({
-  site: "https://<username>.github.io",
+  site: siteConfig.site_url,
   base: "/<repo-name>/",
 });
 ```
