@@ -51,6 +51,7 @@ PUBLIC_DISPLAY_SETTINGS=true
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `wallpaperModeSwitchable` | `boolean` | `false` | 壁纸模式切换开关（横幅/全屏/覆盖透明/无），开启会显著增大构建体积 |
+| `fullscreenLayoutSwitchable` | `boolean` | `true` | 全屏壁纸布局切换开关（`"classic"` / `"hero"`），仅在全屏壁纸模式下显示该布局切换 |
 | `wavesSwitchable` | `boolean` | `true` | 水波纹动画开关 |
 | `gradientSwitchable` | `boolean` | `true` | 渐变过渡效果开关 |
 | `bannerTitleSwitchable` | `boolean` | `true` | 横幅标题显示开关（需同时启用 `homeText.enable`） |
@@ -109,6 +110,7 @@ export const displaySettingsConfig: DisplaySettingsConfig =
 
     // 壁纸
     wallpaperModeSwitchable: false,
+    fullscreenLayoutSwitchable: true,
     wavesSwitchable: true,
     gradientSwitchable: true,
     bannerTitleSwitchable: true,

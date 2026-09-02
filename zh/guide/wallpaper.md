@@ -192,6 +192,37 @@ common: {
 | `slide` | 滑动切换，新图从右侧滑入 |
 | `kenburns` | 旋转木马（推荐），图片缓慢放大的同时通过 LQIP 模糊预览桥接切换，效果最自然 |
 
+### 水波纹动画
+
+横幅壁纸与全屏壁纸（classic 布局）共享的水波纹动画配置，开启会影响页面性能。
+
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `common.waves.enable` | `boolean \| { desktop, mobile }` | `{ desktop: true, mobile: true }` | 是否启用水波纹动画 |
+
+::: warning
+水波纹动画会影响页面性能，请根据需要开启。
+:::
+
+::: tip
+水波纹的用户切换开关已移至 `displaySettingsConfig.wavesSwitchable`，详见 [显示设置面板](./site.md#显示设置面板)。
+:::
+
+### 渐变过渡
+
+当水波纹关闭时自动启用，在壁纸底部提供到背景色的平滑渐变过渡效果。
+
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `common.gradient.enable` | `boolean \| { desktop, mobile }` | `{ desktop: true, mobile: true }` | 是否启用渐变过渡 |
+| `common.gradient.height` | `string` | `"15vh"` | 渐变高度 |
+
+::: info
+渐变过渡与水波纹互斥：水波纹开启时渐变自动隐藏，水波纹关闭时渐变自动显示。两者的用户切换开关已移至 `displaySettingsConfig`，详见 [显示设置面板](./site.md#显示设置面板)。
+
+hero 全屏布局（`fullscreen.layout: "hero"`）不显示水波纹与渐变；classic 布局（`"classic"`）与横幅模式一致显示。
+:::
+
 ## Banner 模式配置
 
 ### 图片位置
@@ -219,51 +250,39 @@ common: {
 所以把 `blur` 设为 `0` 只会关闭导航栏自身的毛玻璃，面板不受影响；纯色背景模式（`mode: "none"`）下面板保持不透明。
 :::
 
-### 水波纹动画
-
-| 属性 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `banner.waves.enable` | `boolean \| { desktop, mobile }` | `{ desktop: true, mobile: true }` | 是否启用水波纹动画 |
-
-::: warning
-水波纹动画会影响页面性能，请根据需要开启。
-:::
-
-::: tip
-水波纹的用户切换开关已移至 `displaySettingsConfig.wavesSwitchable`，详见 [显示设置面板](./site.md#显示设置面板)。
-:::
-
-### 渐变过渡
-
-当水波纹关闭时自动启用，在壁纸底部提供到背景色的平滑渐变过渡效果。
-
-| 属性 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `banner.gradient.enable` | `boolean \| { desktop, mobile }` | `{ desktop: true, mobile: true }` | 是否启用渐变过渡 |
-| `banner.gradient.height` | `string` | `"15vh"` | 渐变高度 |
-
-::: info
-渐变过渡与水波纹互斥：水波纹开启时渐变自动隐藏，水波纹关闭时渐变自动显示。两者的用户切换开关已移至 `displaySettingsConfig`，详见 [显示设置面板](./site.md#显示设置面板)。
-:::
-
 ## Fullscreen 模式配置
 
-全屏壁纸模式将背景图片**固定**铺满整个屏幕：
+全屏壁纸模式通过 `fullscreen.layout` 选择布局（可在设置面板直接切换，运行时选择会持久化到 localStorage）。
 
-- **首页**：首屏只显示壁纸与居中的首页标题，内容区位于首屏之下；下滑时内容区从底部滑上来覆盖壁纸，标题随滚动平滑上移并渐变消失，壁纸从首屏的清晰逐渐过渡到模糊
-- **其他页面**：与覆盖透明模式一致——壁纸固定模糊显示，内容在最上方
-- 壁纸**不透明**（背景透明度 `overlay.opacity` 不适用），模糊度（`blur`）、卡片透明度（`cardOpacity`）、层级（`zIndex`）均复用下方 `overlay` 模式的配置
+### classic（文档流全屏壁纸，旧版）
+
+壁纸随内容一起滚动，行为接近横幅模式：
+
+- **首页**：壁纸占满首屏（`100vh`，文档流中），首页文字居中，内容区位于首屏之下，底部有向下滚动指示器
+- **其他页面（桌面）**：壁纸缩为 `45vh` 横幅，内容区上移贴合；居中显示页面标题（分类/标签/归档）或文章元信息
+- **其他页面（移动端 ≤1023px）**：不显示壁纸，内容区从导航栏下方开始（贴顶）
+- 壁纸**不启用模糊**（`blurRamp` / `overlay.blur` 不生效），显示水波纹与渐变过渡（与横幅模式一致）
+
+### hero（固定首屏全屏壁纸，新版）
+
+壁纸固定铺满屏幕：
+
+- **首页**：壁纸固定铺满首屏（`100lvh`），首页文字居中并随滚动视差上移淡出；下滑时内容区从底部滑上来覆盖壁纸，壁纸由清晰渐变到模糊（`blurRamp`）
+- **其他页面**：壁纸固定模糊显示，内容在最上方（与覆盖透明模式一致）
+- 壁纸**不透明**（`overlay.opacity` 不适用），模糊度（`blur`）、卡片透明度（`cardOpacity`）、层级（`zIndex`）均复用下方 `overlay` 模式的配置
 - 不显示水波纹与渐变过渡
 
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
+| `fullscreen.layout` | `"classic" \| "hero"` | `"classic"` | 全屏布局：`"classic"` 文档流（旧版）、`"hero"` 固定首屏（新版）。未显式设置时默认 `"classic"` |
 | `fullscreen.position` | `string` | `"center"` | CSS `object-position` 值 |
 | `fullscreen.navbar.transparentMode` | `string` | `"semifull"` | 导航栏透明模式：`"semi"` 半透明、`"semifull"` 动态透明（仅**首页**顶部透明、下滑磨砂；非首页为半透明） |
 | `fullscreen.navbar.blur` | `number` | `6` | 导航栏毛玻璃模糊度，`0` 即关闭（玻璃态生效） |
-| `fullscreen.blurRamp.enable` | `boolean \| object` | `{ desktop: true, mobile: true }` | 首页下滑时壁纸模糊渐变开关（从 0 渐变为 `overlay.blur` 的最大模糊）。支持布尔值或分别设置桌面端 / 移动端；关闭后该设备上全屏壁纸保持清晰（首页与非首页都不模糊），设置面板的模糊度滑块也会隐藏 |
+| `fullscreen.blurRamp.enable` | `boolean \| object` | `{ desktop: true, mobile: true }` | 首页下滑时壁纸模糊渐变开关（从 0 渐变为 `overlay.blur` 的最大模糊），**仅 hero 布局生效**。支持布尔值或分别设置桌面端 / 移动端；关闭后该设备上全屏壁纸保持清晰（首页与非首页都不模糊），设置面板的模糊度滑块也会隐藏 |
 
 ```ts
 fullscreen: {
+  layout: "hero",
   position: "center",
   navbar: {
     transparentMode: "semifull",

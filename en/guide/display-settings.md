@@ -51,6 +51,7 @@ A good workflow: keep the panel off in production for the smallest output, and w
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
 | `wallpaperModeSwitchable` | `boolean` | `false` | Wallpaper mode switch toggle (banner/fullscreen/overlay/none). Enabling this noticeably grows the build |
+| `fullscreenLayoutSwitchable` | `boolean` | `true` | Fullscreen wallpaper layout switch toggle (`"classic"` / `"hero"`), shown only in fullscreen wallpaper mode |
 | `wavesSwitchable` | `boolean` | `true` | Wave animation toggle |
 | `gradientSwitchable` | `boolean` | `true` | Gradient transition effect toggle |
 | `bannerTitleSwitchable` | `boolean` | `true` | Banner title display toggle (requires `homeText.enable` to be enabled) |
@@ -109,6 +110,7 @@ export const displaySettingsConfig: DisplaySettingsConfig =
 
     // Wallpaper
     wallpaperModeSwitchable: false,
+    fullscreenLayoutSwitchable: true,
     wavesSwitchable: true,
     gradientSwitchable: true,
     bannerTitleSwitchable: true,

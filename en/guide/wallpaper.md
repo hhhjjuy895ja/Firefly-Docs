@@ -190,6 +190,37 @@ The wallpaper carousel user toggle has been moved to `displaySettingsConfig.bann
 | `slide` | New image slides in from the right |
 | `kenburns` | Ken Burns (recommended) — image slowly zooms in while transitioning via LQIP blurred preview bridge for the smoothest effect |
 
+### Wave Animation
+
+Shared wave animation config for banner wallpaper and fullscreen wallpaper (classic layout). Enabling it affects page performance.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `common.waves.enable` | `boolean \| { desktop, mobile }` | `{ desktop: true, mobile: true }` | Enable wave animation |
+
+::: warning
+Wave animation affects page performance. Enable based on your needs.
+:::
+
+::: tip
+The wave animation user toggle has been moved to `displaySettingsConfig.wavesSwitchable`. See [Display Settings Panel](./site.md#display-settings-panel).
+:::
+
+### Gradient Transition
+
+Automatically enabled when waves are disabled, providing a smooth gradient fade from the wallpaper bottom to the background color.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `common.gradient.enable` | `boolean \| { desktop, mobile }` | `{ desktop: true, mobile: true }` | Enable gradient transition |
+| `common.gradient.height` | `string` | `"15vh"` | Gradient height |
+
+::: info
+Gradient and waves are mutually exclusive: when waves are enabled, the gradient is automatically hidden; when waves are disabled, the gradient is automatically shown. Both user toggles have been moved to `displaySettingsConfig`. See [Display Settings Panel](./site.md#display-settings-panel).
+
+The hero fullscreen layout (`fullscreen.layout: "hero"`) does not show waves or gradient; the classic layout (`"classic"`) shows them just like banner mode.
+:::
+
 ## Banner Mode
 
 ### Image Position
@@ -217,51 +248,39 @@ The navbar's dropdown menus and float panels (search, display settings, light/da
 So setting `blur` to `0` only disables the frosted glass on the navbar itself — the panels are unaffected. In pure-color mode (`mode: "none"`) the panels stay opaque.
 :::
 
-### Wave Animation
-
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `banner.waves.enable` | `boolean \| { desktop, mobile }` | `{ desktop: true, mobile: true }` | Enable wave animation |
-
-::: warning
-Wave animation affects page performance. Enable based on your needs.
-:::
-
-::: tip
-The wave animation user toggle has been moved to `displaySettingsConfig.wavesSwitchable`. See [Display Settings Panel](./site.md#display-settings-panel).
-:::
-
-### Gradient Transition
-
-Automatically enabled when waves are disabled, providing a smooth gradient fade from the wallpaper bottom to the background color.
-
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `banner.gradient.enable` | `boolean \| { desktop, mobile }` | `{ desktop: true, mobile: true }` | Enable gradient transition |
-| `banner.gradient.height` | `string` | `"15vh"` | Gradient height |
-
-::: info
-Gradient and waves are mutually exclusive: when waves are enabled, the gradient is automatically hidden; when waves are disabled, the gradient is automatically shown. Both user toggles have been moved to `displaySettingsConfig`. See [Display Settings Panel](./site.md#display-settings-panel).
-:::
-
 ## Fullscreen Mode
 
-Fullscreen wallpaper mode **fixes** the background image across the entire screen:
+Fullscreen wallpaper mode lets you pick a layout via `fullscreen.layout` (switchable directly in the settings panel; the runtime choice persists to localStorage).
 
-- **Home page**: the first screen shows only the wallpaper with the centered home title; the content area sits below the fold. Scrolling slides the content up over the wallpaper, the title fades out smoothly as it scrolls up, and the wallpaper transitions from crisp to blurred
-- **Other pages**: behaves like overlay mode — the wallpaper stays fixed and blurred, content at the top
+### classic (document-flow fullscreen, legacy)
+
+The wallpaper scrolls with the content, behaving like banner mode:
+
+- **Home page**: the wallpaper fills the first screen (`100vh`, in document flow) with centered home text; the content area sits below the fold and a scroll-down indicator appears at the bottom
+- **Other pages (desktop)**: the wallpaper shrinks to a `45vh` banner and the content moves up to meet it, showing the page title (category/tag/archive) or post meta centered
+- **Other pages (mobile ≤1023px)**: no wallpaper; content starts right below the navbar
+- The wallpaper is **not blurred** (`blurRamp` / `overlay.blur` have no effect) and shows waves and gradient transitions (same as banner mode)
+
+### hero (fixed first-screen fullscreen, new)
+
+The wallpaper is fixed across the screen:
+
+- **Home page**: the wallpaper is fixed and fills the first screen (`100lvh`) with centered home text that parallax-fades as you scroll; the content area slides up from the bottom to cover it, and the wallpaper transitions from crisp to blurred (`blurRamp`)
+- **Other pages**: the wallpaper stays fixed and blurred with content at the top (same as overlay mode)
 - The wallpaper is **opaque** (`overlay.opacity` does not apply); blur (`blur`), card opacity (`cardOpacity`) and z-index (`zIndex`) are reused from the `overlay` config below
 - Waves and gradient transitions are not shown
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
+| `fullscreen.layout` | `"classic" \| "hero"` | `"classic"` | Fullscreen layout: `"classic"` document-flow (legacy), `"hero"` fixed first screen (new). Defaults to `"classic"` when unset |
 | `fullscreen.position` | `string` | `"center"` | CSS `object-position` value |
 | `fullscreen.navbar.transparentMode` | `string` | `"semifull"` | Navbar mode: `"semi"` semi-transparent, `"semifull"` dynamic (transparent at the **top of the home page**, frosted on scroll; semi-transparent on other pages) |
 | `fullscreen.navbar.blur` | `number` | `6` | Navbar frosted blur; `0` disables it (applies in the frosted state) |
-| `fullscreen.blurRamp.enable` | `boolean \| object` | `{ desktop: true, mobile: true }` | Blur ramp toggle for the home page scroll (blur ramps from 0 to `overlay.blur` as you scroll). Supports a boolean or per-device `{ desktop, mobile }`; when disabled on a device, fullscreen wallpaper stays crisp there (home and other pages) and the settings-panel blur slider is hidden |
+| `fullscreen.blurRamp.enable` | `boolean \| object` | `{ desktop: true, mobile: true }` | Blur ramp toggle for the home page scroll (blur ramps from 0 to `overlay.blur` as you scroll), **only for the hero layout**. Supports a boolean or per-device `{ desktop, mobile }`; when disabled on a device, fullscreen wallpaper stays crisp there (home and other pages) and the settings-panel blur slider is hidden |
 
 ```ts
 fullscreen: {
+  layout: "hero",
   position: "center",
   navbar: {
     transparentMode: "semifull",
