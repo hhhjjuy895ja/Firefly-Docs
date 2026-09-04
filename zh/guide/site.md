@@ -156,7 +156,10 @@ favicon: [
 |------|------|--------|------|
 | `post.showLastModified` | `boolean` | `true` | 是否显示文章底部的"上次编辑时间"卡片 |
 | `post.outdatedThreshold` | `number` | `30` | 文章过期阈值（天数），超过此天数才显示"上次编辑"卡片 |
-| `post.sharePoster` | `boolean` | `true` | 是否开启分享海报生成功能，海报顶部显示站点 Logo 与标题 |
+| `post.share` | `boolean` | `true` | 是否显示文章页的分享按钮 |
+| `post.postNavigation` | `boolean` | `true` | 是否显示上一篇/下一篇文章导航 |
+| `post.relatedPosts` | `boolean` | `true` | 是否显示相关文章推荐 |
+| `post.randomPosts` | `boolean` | `true` | 是否显示随机文章推荐 |
 | `post.generateOgImages` | `boolean` | `false` | 是否生成 OpenGraph 图片（开启后构建时间较长） |
 
 ## 文章列表布局

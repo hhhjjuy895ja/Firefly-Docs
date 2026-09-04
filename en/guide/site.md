@@ -149,7 +149,10 @@ Restart the dev server after changing this setting.
 |----------|------|---------|-------------|
 | `post.showLastModified` | `boolean` | `true` | Show "last modified" card at the bottom of posts |
 | `post.outdatedThreshold` | `number` | `30` | Days threshold for showing the "last modified" card |
-| `post.sharePoster` | `boolean` | `true` | Enable share poster generation. The poster header shows the site logo and title |
+| `post.share` | `boolean` | `true` | Show share button on post pages |
+| `post.postNavigation` | `boolean` | `true` | Show previous/next post navigation |
+| `post.relatedPosts` | `boolean` | `true` | Show related posts recommendation |
+| `post.randomPosts` | `boolean` | `true` | Show random posts recommendation |
 | `post.generateOgImages` | `boolean` | `false` | Generate OpenGraph images (increases build time) |
 
 ## Post List Layout
