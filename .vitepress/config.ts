@@ -84,6 +84,7 @@ export default defineConfig({
                 { text: 'MyAnimeList', link: '/zh/guide/myanimelist' },
                 { text: '番组计划', link: '/zh/guide/bangumi' },
                 { text: '书签导航', link: '/zh/guide/booknav' },
+                { text: '项目', link: '/zh/guide/projects' },
               ],
             },
             {
@@ -179,6 +180,7 @@ export default defineConfig({
                 { text: 'MyAnimeList', link: '/en/guide/myanimelist' },
                 { text: 'Bangumi', link: '/en/guide/bangumi' },
                 { text: 'Booknav', link: '/en/guide/booknav' },
+                { text: 'Projects', link: '/en/guide/projects' },
               ],
             },
             {

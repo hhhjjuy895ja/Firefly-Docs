@@ -244,6 +244,29 @@ tagStyle: "pill",
 |------|------|--------|------|
 | `pagination.postsPerPage` | `number` | `10` | 每页显示的文章数量 |
 
+## 订阅配置（RSS / Atom）
+
+Firefly 会自动生成 RSS 与 Atom 订阅。`feed` 配置统一控制两个订阅的条目内容模式（全文或摘要）。
+
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `feed.contentMode` | `"full" \| "summary"` | `"full"` | 订阅条目内容模式。`"full"` 包含文章正文全文；`"summary"` 仅包含文章摘要/描述，不含正文，体积更小 |
+
+```ts
+feed: {
+  // "full": 包含文章正文全文（默认）
+  // "summary": 仅包含文章摘要/描述，不含正文
+  contentMode: "full",
+},
+```
+
+::: tip 相关地址
+- 订阅页面：`/rss/` 与 `/atom/`（含复制链接、最新文章预览）
+- 订阅地址：`/rss.xml` 与 `/atom.xml`
+- AI 友好站点地图：`/llms.txt`（按 [llms.txt 规范](https://llmstxt.org) 自动生成：站点标题 + 描述 + 主要页面 + 最近文章）
+- 页脚默认提供 `RSS` / `Atom` 快捷链接
+:::
+
 ## 页面开关
 
 | 属性 | 类型 | 默认值 | 说明 |

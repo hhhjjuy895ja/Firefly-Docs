@@ -237,6 +237,29 @@ When `postListLayout.tagsBottomStyle` is `"text"` the bottom tags have no backgr
 |----------|------|---------|-------------|
 | `pagination.postsPerPage` | `number` | `10` | Posts per page |
 
+## Subscription (RSS / Atom)
+
+Firefly generates RSS and Atom feeds automatically. The `feed` config controls whether feed entries include the full post body or only a summary, applying to both feeds.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `feed.contentMode` | `"full" \| "summary"` | `"full"` | Feed entry content mode. `"full"` includes the full article body; `"summary"` includes only the article summary/description (no body), producing a smaller feed |
+
+```ts
+feed: {
+  // "full": include the full article body (default)
+  // "summary": include only the article summary/description, no body
+  contentMode: "full",
+},
+```
+
+::: tip Related URLs
+- Subscription pages: `/rss/` and `/atom/` (with copy-link and recent-posts preview)
+- Feed addresses: `/rss.xml` and `/atom.xml`
+- LLM-friendly site map: `/llms.txt` (generated following the [llms.txt spec](https://llmstxt.org): site title + description + key pages + recent posts)
+- The footer provides `RSS` / `Atom` quick links by default
+:::
+
 ## Page Toggles
 
 | Property | Type | Default | Description |
